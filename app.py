@@ -96,7 +96,7 @@ def obtener_tarea(id: int) -> wrappers.Response:
     Para realizar el método `GET` para obtener una tarea se digita el
     comando
 
-    >>> curl -u <user>:<pass> -i <host>/todo/api/v1.0/tasks/<id>
+    >>> curl -u <user>:<pass> -i <host>/todo/api/v1.0/tareas/<id>
 
     :param id: Identificador de la tarea en `tareas`
     :type id: int
