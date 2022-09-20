@@ -193,3 +193,26 @@ def actualizar_tarea(id: int) -> wrappers.Response:
     tarea['terminada'] = tarea_act.get('terminada', tarea['terminada'])
 
     return jsonify({'tarea': publicar_tarea(tarea)})
+
+
+@app.route('/todo/api/v1.0/tasks/<int:id>', methods=['DELETE'])
+@auth.login_required
+def borrar_tarea(id: int) -> wrappers.Response:
+    """Borra la información completa de la tarea identificada por `id`.
+    En caso de no existir el identificador, se presenta el error `404`.
+    Para realizar el método `DELETE` para eliminar una tarea se digita
+    el comando
+
+    >>> curl -u <user>:<pass> -i -X DELETE <host>/todo/api/v1.0/tasks/<id>
+
+    :param id: Identificador de la tarea
+    :type id: int
+    :return: Json con llaves `result` y valor `true`
+    :rtype: wrappers.Response
+    """
+    tarea = [t for t in tareas if t['id'] == id]
+    assert tarea, abort(404)
+
+    tareas.remove(tarea[0])
+
+    return jsonify({'result': True})
