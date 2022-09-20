@@ -29,7 +29,7 @@ def unauthorized() -> wrappers.Response:
     para evitar que los navegadores muestren el cuadro de diálogo de
     autenticación predeterminado
 
-    :return: _description_
+    :return: Error `403` de acceso no autorizado
     :rtype: wrappers.Response
     """
     return make_response(jsonify({'error': 'Acceso no autorizado'}), 403)
