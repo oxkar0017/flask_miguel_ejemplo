@@ -1,4 +1,5 @@
 from flask import abort, Flask, jsonify, make_response, request, url_for
+from flask import wrappers
 from flask_httpauth import HTTPBasicAuth
 from typing import Optional
 
@@ -20,3 +21,15 @@ def get_password(usuario: str) -> Optional[str]:
         return 'python'
 
     return None
+
+
+@auth.error_handler
+def unauthorized() -> wrappers.Response:
+    """Genera error `403` por acceso no autorizado, en lugar de `401`
+    para evitar que los navegadores muestren el cuadro de diálogo de
+    autenticación predeterminado
+
+    :return: _description_
+    :rtype: wrappers.Response
+    """
+    return make_response(jsonify({'error': 'Acceso no autorizado'}), 403)
