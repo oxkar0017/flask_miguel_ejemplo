@@ -92,7 +92,11 @@ def publicar_tarea(tarea: dict) -> dict:
 @auth.login_required
 def obtener_tarea(id: int) -> wrappers.Response:
     """Solicita la información de la tarea identificada por `id`. En
-    caso de no existir el identificador, se presenta el error `404`
+    caso de no existir el identificador, se presenta el error `404`.
+    Para realizar el método `GET` para obtener una tarea se digita el
+    comando
+
+    >>> curl -u <user>:<pass> -i <host>/todo/api/v1.0/tasks/<id>
 
     :param id: Identificador de la tarea en `tareas`
     :type id: int
