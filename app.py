@@ -152,3 +152,42 @@ def crear_tarea() -> Tuple[wrappers.Response, int]:
     tareas.append(tarea)
 
     return jsonify({'tarea': publicar_tarea(tarea)}), 201
+
+
+@app.route('/todo/api/v1.0/tareas/<int:id>', methods=['PUT'])
+@auth.login_required
+def actualizar_tarea(id: int) -> wrappers.Response:
+    """Actualiza los valores `nombre`, `descripcion` o `terminada` para
+    una tarea existente en `tareas` con identificador `id`. Para
+    realizar el método `PUT` para actualizar una tarea vieja se digita
+    el comando
+
+    >>> curl -u <user>:<pass> -i -H "Content-Type: application/json" -X PUT -d 
+    "{\"nombre\":\"<nombre tarea>\",\"descripcion\":\"<descripcion tarea>\",\"terminada\":\"<true o false>\"}" 
+    <host>/todo/api/v1.0/tasks/<id>
+
+    :param id: Identificador de la tarea
+    :type id: int
+    :return: Json publicando la nueva tarea con llaves `uri`, `nombre`,
+      `descripcion` y `terminada`
+    :rtype : wrappers.Response
+    """
+    tarea = [t for t in tareas if t['id'] == id]
+    tarea_act = request.json
+
+    cond_no_error_cliente = (
+        tarea
+        and tarea_act
+        and ('nombre' not in tarea_act or isinstance(tarea_act['nombre'], str))
+        and ('descripcion' not in tarea_act or isinstance(tarea_act['descripcion'], str))
+        and ('terminada' not in tarea_act or isinstance(tarea_act['terminada'], bool))
+        and ('nombre' in tarea_act or 'descripcion' in tarea_act or 'terminada' in tarea_act))
+    assert cond_no_error_cliente, abort(404)
+
+    tarea = tarea[0]
+
+    tarea['nombre'] = tarea_act.get('nombre', tarea['nombre'])
+    tarea['descripcion'] = tarea_act.get('descripcion', tarea['descripcion'])
+    tarea['terminada'] = tarea_act.get('terminada', tarea['terminada'])
+
+    return jsonify({'tarea': publicar_tarea(tarea[0])})
