@@ -1,7 +1,7 @@
 from flask import abort, Flask, jsonify, make_response, request, url_for
 from flask import wrappers
 from flask_httpauth import HTTPBasicAuth
-from typing import Optional
+from typing import Optional, Tuple
 
 
 app = Flask(__name__, static_url_path='')
@@ -119,7 +119,7 @@ def obtener_tareas() -> wrappers.Response:
     >>> curl -u <user>:<pass> -i <host>/todo/api/v1.0/tasks
 
     :return: Json publicando todas las tareas con llaves `uri`,
-      `nombre`, `descripcion` y `finalizado`
+      `nombre`, `descripcion` y `terminada`
     :rtype: wrappers.Response
     """
     return jsonify({'tareas': [publicar_tarea(t) for t in tareas]})
