@@ -101,7 +101,7 @@ def obtener_tarea(id: int) -> wrappers.Response:
     :param id: Identificador de la tarea en `tareas`
     :type id: int
     :return: Json publicando la tarea con llaves `uri`, `nombre`,
-      `descripcion` y `finalizado`
+      `descripcion` y `terminada`
     :rtype: wrappers.Response
     """
     tarea = [t for t in tareas if t['id'] == id]
