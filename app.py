@@ -108,3 +108,18 @@ def obtener_tarea(id: int) -> wrappers.Response:
     assert tarea, abort(404)
 
     return jsonify({'tarea': publicar_tarea(tarea[0])})
+
+
+@app.route('/todo/api/v1.0/tareas', methods=['GET'])
+@auth.login_required
+def obtener_tareas() -> wrappers.Response:
+    """Solicita la información de todas las tareas. Para realizar el
+    método `GET` para obtener todas las tareas se digita el comando
+
+    >>> curl -u <user>:<pass> -i <host>/todo/api/v1.0/tasks
+
+    :return: Json publicando todas las tareas con llaves `uri`,
+      `nombre`, `descripcion` y `finalizado`
+    :rtype: wrappers.Response
+    """
+    return jsonify({'tareas': [publicar_tarea(t) for t in tareas]})
