@@ -123,3 +123,32 @@ def obtener_tareas() -> wrappers.Response:
     :rtype: wrappers.Response
     """
     return jsonify({'tareas': [publicar_tarea(t) for t in tareas]})
+
+
+@app.route('/todo/api/v1.0/tareas', methods=['POST'])
+@auth.login_required
+def crear_tarea() -> Tuple[wrappers.Response, int]:
+    """Agrega una tarea nueva a la base de datos `tareas` generando como
+    respuesta el valor `201`. Para realizar el método `POST` para
+    crear una tarea nueva se digita el comando
+
+    >>> curl -u <user>:<pass> -i -H "Content-Type: application/json" -X POST -d 
+    "{\"nombre\":\"<nombre tarea>\",\"descripcion\":\"<descripcion tarea>\"}" 
+    <host>/todo/api/v1.0/tasks
+
+    :return: Json publicando la nueva tarea con llaves `uri`, `nombre`,
+      `descripcion` y `terminada`, y el valor `201`
+    :rtype: Tuple[wrappers.Response, int]
+    """
+    tarea_nueva = request.json
+    assert tarea_nueva and 'nombre' in tarea_nueva, abort(400)
+
+    tarea = {
+        'id': tareas[-1]['id'] + 1,
+        'nombre': tarea_nueva['nombre'],
+        'descripcion': tarea_nueva.get('descripcion', ''),
+        'terminada': False
+    }
+    tareas.append(tarea)
+
+    return jsonify({'tarea': publicar_tarea(tarea)}), 201
