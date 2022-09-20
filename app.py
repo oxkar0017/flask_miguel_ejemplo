@@ -134,7 +134,7 @@ def crear_tarea() -> Tuple[wrappers.Response, int]:
 
     >>> curl -u <user>:<pass> -i -H "Content-Type: application/json" -X POST -d 
     "{\"nombre\":\"<nombre tarea>\",\"descripcion\":\"<descripcion tarea>\"}" 
-    <host>/todo/api/v1.0/tasks
+    <host>/todo/api/v1.0/tareas
 
     :return: Json publicando la nueva tarea con llaves `uri`, `nombre`,
       `descripcion` y `terminada`, y el valor `201`
