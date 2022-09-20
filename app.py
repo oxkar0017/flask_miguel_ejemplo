@@ -165,8 +165,8 @@ def actualizar_tarea(id: int) -> wrappers.Response:
     `PUT` para actualizar una tarea vieja se digita el comando
 
     >>> curl -u <user>:<pass> -i -H "Content-Type: application/json" -X PUT -d 
-    "{\"nombre\":\"<nombre tarea>\",\"descripcion\":\"<descripcion tarea>\",\"terminada\":\"<true o false>\"}" 
-    <host>/todo/api/v1.0/tasks/<id>
+    "{\"nombre\":\"<nombre tarea>\",\"descripcion\":\"<descripcion tarea>\",\"terminada\":<true o false>}" 
+    <host>/todo/api/v1.0/tareas/<id>
 
     :param id: Identificador de la tarea
     :type id: int
