@@ -195,7 +195,7 @@ def actualizar_tarea(id: int) -> wrappers.Response:
     return jsonify({'tarea': publicar_tarea(tarea)})
 
 
-@app.route('/todo/api/v1.0/tasks/<int:id>', methods=['DELETE'])
+@app.route('/todo/api/v1.0/tareas/<int:id>', methods=['DELETE'])
 @auth.login_required
 def borrar_tarea(id: int) -> wrappers.Response:
     """Borra la información completa de la tarea identificada por `id`.
@@ -203,7 +203,7 @@ def borrar_tarea(id: int) -> wrappers.Response:
     Para realizar el método `DELETE` para eliminar una tarea se digita
     el comando
 
-    >>> curl -u <user>:<pass> -i -X DELETE <host>/todo/api/v1.0/tasks/<id>
+    >>> curl -u <user>:<pass> -i -X DELETE <host>/todo/api/v1.0/tareas/<id>
 
     :param id: Identificador de la tarea
     :type id: int
