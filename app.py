@@ -44,3 +44,6 @@ def bad_request() -> wrappers.Response:
     :rtype: wrappers.Response
     """
     return make_response(jsonify({'error': 'Mala solicitud'}), 400)
+
+
+app = Flask(__name__, static_url_path='')
