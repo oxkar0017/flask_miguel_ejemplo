@@ -47,3 +47,20 @@ def bad_request() -> wrappers.Response:
 
 
 app = Flask(__name__, static_url_path='')
+
+
+tareas = [
+    {
+        'id': 1,
+        'nombre': u'Comprar comida',
+        'descripcion': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+        'terminada': False
+    },
+    {
+        'id': 2,
+        'nombre': u'Aprender python',
+        'descripcion': (
+            u'Necesito encontrar un buen sitio web de tutorial python'), 
+        'terminada': False
+    }
+]
