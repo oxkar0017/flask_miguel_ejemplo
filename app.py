@@ -158,9 +158,11 @@ def crear_tarea() -> Tuple[wrappers.Response, int]:
 @auth.login_required
 def actualizar_tarea(id: int) -> wrappers.Response:
     """Actualiza los valores `nombre`, `descripcion` o `terminada` para
-    una tarea existente en `tareas` con identificador `id`. Para
-    realizar el método `PUT` para actualizar una tarea vieja se digita
-    el comando
+    una tarea existente en `tareas` con identificador `id`. En caso de
+    no existir el identificador, que no haya valores a actualizar en la
+    tarea, que `nombre` o `descripcion` no sean `str`, o que `terminada`
+    no sea `bool`, se presenta el error `404`. Para realizar el método
+    `PUT` para actualizar una tarea vieja se digita el comando
 
     >>> curl -u <user>:<pass> -i -H "Content-Type: application/json" -X PUT -d 
     "{\"nombre\":\"<nombre tarea>\",\"descripcion\":\"<descripcion tarea>\",\"terminada\":\"<true o false>\"}" 
@@ -181,7 +183,7 @@ def actualizar_tarea(id: int) -> wrappers.Response:
         and ('nombre' not in tarea_act or isinstance(tarea_act['nombre'], str))
         and ('descripcion' not in tarea_act or isinstance(tarea_act['descripcion'], str))
         and ('terminada' not in tarea_act or isinstance(tarea_act['terminada'], bool))
-        and ('nombre' in tarea_act or 'descripcion' in tarea_act or 'terminada' in tarea_act))
+    )
     assert cond_no_error_cliente, abort(404)
 
     tarea = tarea[0]
@@ -190,4 +192,4 @@ def actualizar_tarea(id: int) -> wrappers.Response:
     tarea['descripcion'] = tarea_act.get('descripcion', tarea['descripcion'])
     tarea['terminada'] = tarea_act.get('terminada', tarea['terminada'])
 
-    return jsonify({'tarea': publicar_tarea(tarea[0])})
+    return jsonify({'tarea': publicar_tarea(tarea)})
