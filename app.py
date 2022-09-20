@@ -116,7 +116,7 @@ def obtener_tareas() -> wrappers.Response:
     """Solicita la información de todas las tareas. Para realizar el
     método `GET` para obtener todas las tareas se digita el comando
 
-    >>> curl -u <user>:<pass> -i <host>/todo/api/v1.0/tasks
+    >>> curl -u <user>:<pass> -i <host>/todo/api/v1.0/tareas
 
     :return: Json publicando todas las tareas con llaves `uri`,
       `nombre`, `descripcion` y `terminada`
