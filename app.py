@@ -64,3 +64,25 @@ tareas = [
         'terminada': False
     }
 ]
+
+
+def publicar_tarea(tarea: dict) -> dict:
+    """Publica json de una tarea generando el endpoint para visualizar
+    la misma
+
+    :param tarea: Diccionario con llaves `id`, `nombre`, `descripcion` y
+      `terminada`
+    :type tarea: dict
+    :return: Diccionario con llaves `uri`, `nombre`, `descripcion` y
+      `terminada`
+    :rtype: dict
+    """
+    vista_tarea = {}
+    for llave in tarea:
+        if llave == 'id':
+            vista_tarea['uri'] = url_for(
+                'obtener_tarea', id=tarea['id'], _external=True)
+        else:
+            vista_tarea[llave] = tarea[llave]
+
+    return vista_tarea
