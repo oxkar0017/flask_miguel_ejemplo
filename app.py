@@ -33,3 +33,14 @@ def unauthorized() -> wrappers.Response:
     :rtype: wrappers.Response
     """
     return make_response(jsonify({'error': 'Acceso no autorizado'}), 403)
+
+
+@app.errorhandler(400)
+def bad_request() -> wrappers.Response:
+    """Genera error `400` por un error en la solicitud por parte del
+    cliente
+
+    :return: Error `400` de mala solicitud
+    :rtype: wrappers.Response
+    """
+    return make_response(jsonify({'error': 'Mala solicitud'}), 400)
