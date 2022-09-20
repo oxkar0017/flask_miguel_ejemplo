@@ -86,3 +86,21 @@ def publicar_tarea(tarea: dict) -> dict:
             vista_tarea[llave] = tarea[llave]
 
     return vista_tarea
+
+
+@app.route('/todo/api/v1.0/tareas/<int:id>', methods=['GET'])
+@auth.login_required
+def obtener_tarea(id: int) -> wrappers.Response:
+    """Solicita la información de la tarea identificada por `id`. En
+    caso de no existir el identificador, se presenta el error `404`
+
+    :param id: Identificador de la tarea en `tareas`
+    :type id: int
+    :return: Json publicando la tarea con llaves `uri`, `nombre`,
+      `descripcion` y `finalizado`
+    :rtype: wrappers.Response
+    """
+    tarea = [t for t in tareas if t['id'] == id]
+    assert tarea, abort(404)
+
+    return jsonify({'tarea': publicar_tarea(tarea[0])})
